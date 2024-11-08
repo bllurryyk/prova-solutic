@@ -1,0 +1,19 @@
+<mat-toolbar class="toolbar">
+  <button mat-button>
+    <mat-icon>dataset</mat-icon>
+    <h1>Gestor ADM</h1>
+  </button>
+
+  <div class="hidden sm:block">
+    <button *ngFor="let categoria of menuItems" class="ml-2" mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>{{categoria.icone}}</mat-icon>
+      {{categoria.titulo}}
+      <mat-menu #menu="matMenu" class="mt-2">
+        <button *ngFor="let opcao of categoria.menu" mat-menu-item [routerLink]="opcao.parametro ? [opcao.rota, opcao.parametro] : [opcao.rota]">
+          <mat-icon>{{opcao.icone}}</mat-icon>
+          {{opcao.nome}}
+        </button>
+      </mat-menu>
+    </button>
+  </div>
+</mat-toolbar>
