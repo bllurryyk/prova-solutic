@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { response } from 'express';
 import { Cliente } from '../models/cliente.model';
 
@@ -14,8 +14,11 @@ export class ClienteService {
     private _httpClient: HttpClient
   ) { }
 
-  getClientes() {
-    const url = `${environment.api}/clientes/get`;
+  getClientes(nome?: string) {
+    var url = `${environment.api}/clientes/get`;
+    if (nome != '') {
+      url = `${environment.api}/clientes/get?nome=${nome}`;
+    }
     return this._httpClient.get<Object>(url).pipe(
       map((response: any) => {
         return response;
@@ -30,5 +33,17 @@ export class ClienteService {
         return response;
       })
     )
+  }
+
+  getExcel(nome?: string): Observable<Blob> {
+    var url = `${environment.api}/clientes/excel`;
+    if (nome != '') {
+      url = `${environment.api}/clientes/excel?nome=${nome}`;
+    }
+
+    return this._httpClient.get(url, {
+      headers: new HttpHeaders(),
+      responseType: 'blob'
+    })
   }
 }

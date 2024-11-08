@@ -18,9 +18,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { CadastroClienteComponent } from './pages/cliente/cadastro-cliente/cadastro-cliente.component';
 import { HeaderPageComponent } from './components/header-page/header-page.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.component';
@@ -29,7 +29,6 @@ import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.com
   declarations: [
     AppComponent,
     NavbarComponent,
-    CadastroClienteComponent,
     HeaderPageComponent,
     ClientesComponent,
     DialogAlertComponent
@@ -51,11 +50,13 @@ import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.com
     MatInputModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxMaskDirective
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    [provideNgxMask({})]
   ],
   bootstrap: [AppComponent]
 })
