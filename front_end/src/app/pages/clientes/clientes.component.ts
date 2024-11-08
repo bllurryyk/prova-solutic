@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { UtilsService } from '../../services/utils.service';
+import { HttpResponse } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-clientes',
@@ -77,6 +79,7 @@ export class ClientesComponent {
     this._clienteService.getClientes().subscribe(
       (response) => {
         this.listaClientes = response;
+        console.log(response);
       },
       (error) => {
         console.error(error);
@@ -84,5 +87,21 @@ export class ClientesComponent {
     )
   }
 
-  limparFiltrosClientes() {}
+  limparFiltrosClientes() {
+    this.formFiltros.reset();
+  }
+
+  gerarExcel() {
+    const nome = this.formFiltros.get('nome')?.value;
+    this._clienteService.getExcel(nome ?? '').subscribe(
+      (response: Blob) => {
+        const filename = 'clientes.xlsx';
+        saveAs(response, filename)
+      },
+      (error) => {
+        console.error(error);
+        this._utilsService.showAlertDialog(2, 'Não foi possível gerar o Excel. Favor tente novamente mais tarde.');
+      }
+    )
+  }
 }

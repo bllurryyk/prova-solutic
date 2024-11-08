@@ -20,7 +20,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { CadastroClienteComponent } from './pages/cliente/cadastro-cliente/cadastro-cliente.component';
 import { HeaderPageComponent } from './components/header-page/header-page.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.component';
@@ -29,7 +28,6 @@ import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.com
   declarations: [
     AppComponent,
     NavbarComponent,
-    CadastroClienteComponent,
     HeaderPageComponent,
     ClientesComponent,
     DialogAlertComponent
