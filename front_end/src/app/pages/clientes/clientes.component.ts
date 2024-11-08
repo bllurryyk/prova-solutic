@@ -60,35 +60,44 @@ export class ClientesComponent {
           if (response.erro === false) {
             this.recuperarClientes();
             this._utilsService.showAlertDialog(0, 'Cliente cadastrado com sucesso.');
+            this.formCliente.reset();
+            this.loading = false;
           } else {
             this._utilsService.showAlertDialog(2, 'Ocorreu um erro, favor tentar novamente mais tarde.');
+            this.loading = false;
           }
         },
         (error) => {
           console.error(error);
           this._utilsService.showAlertDialog(2, 'Ocorreu um erro, favor tentar novamente mais tarde.');
+          this.loading = false;
         }
       )
     } else {
       this._utilsService.showAlertDialog(1, 'Você precisa preencher todos os campos obrigatórios');
+      this.loading = false;
     }
   }
 
   listaClientes: any[] = []
   recuperarClientes() {
-    this._clienteService.getClientes().subscribe(
+    this.loading = true;
+    const nome = this.formFiltros.get('nome')?.value;
+    this._clienteService.getClientes(nome ?? '').subscribe(
       (response) => {
         this.listaClientes = response;
-        console.log(response);
+        this.loading = false;
       },
       (error) => {
         console.error(error);
+        this.loading = false;
       }
     )
   }
 
   limparFiltrosClientes() {
     this.formFiltros.reset();
+    this.recuperarClientes();
   }
 
   gerarExcel() {
