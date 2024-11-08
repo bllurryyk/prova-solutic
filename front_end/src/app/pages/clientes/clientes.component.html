@@ -45,6 +45,13 @@
                 <tr>
                   <th scope="col" class="px-6 py-3">ID</th>
                   <th scope="col" class="px-6 py-3">Nome Completo</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">E-mail</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">Telefone</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">Endereço</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">Número</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">Complemento</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">Bairro</th>
+                  <th scope="col" class="px-6 py-3" class="hidden sm:table-cell">Cidade</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,6 +61,27 @@
                   </th>
                   <th scope="row" class="px-6 py-4">
                     {{ cliente.nome }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.email }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.telefone }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.endereco }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.numero }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.complemento }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.bairro }}
+                  </th>
+                  <th scope="row" class="px-6 py-4" class="hidden sm:table-cell">
+                    {{ cliente.cidade }}
                   </th>
                 </tr>
               </tbody>
@@ -70,8 +98,11 @@
         </mat-tab>
 
         <mat-tab label="Cadastro">
+          <div *ngIf="loading" class="flex justify-center mt-8 mb-4">
+            <mat-spinner></mat-spinner>
+          </div>
           <form [formGroup]="formCliente" class="p-4">
-            <div class="grid md:grid-cols-4 gap-4">
+            <div *ngIf="!loading" class="grid md:grid-cols-4 gap-4">
               <div class="w-full md:col-span-2">
                 <mat-form-field appearance="fill" class="w-full">
                   <mat-label>Nome Completo</mat-label>
@@ -80,7 +111,6 @@
                     id="campo-nome"
                     matInput
                     formControlName="nome"
-
                     [maxlength]="80"
                   />
                 </mat-form-field>
@@ -92,10 +122,9 @@
                   <mat-icon matSuffix>mail</mat-icon>
                   <input
                     id="campo-email"
-                    type="email"
+                    inputmode="email"
                     matInput
                     formControlName="email"
-
                     [maxlength]="50"
                   />
                 </mat-form-field>
@@ -107,10 +136,10 @@
                   <mat-icon matSuffix>phone</mat-icon>
                   <input
                     id="campo-telefone"
-                    type="number"
                     matInput
                     formControlName="telefone"
-                    [maxlength]="11"
+                    mask="(00) 0 0000-0000"
+                    inputmode="numeric"
                   />
                 </mat-form-field>
               </div>
@@ -135,10 +164,11 @@
                   <mat-icon matSuffix>people</mat-icon>
                   <input
                     id="campo-numero"
-                    type="number"
+                    inputmode="numeric"
                     matInput
                     formControlName="numero"
                     [maxlength]="6"
+                    mask="0*"
                   />
                 </mat-form-field>
               </div>
@@ -185,22 +215,12 @@
                 </mat-form-field>
               </div>
             </div>
-            <div>
+            <div *ngIf="!loading">
               <button mat-flat-button extended color="warm" (click)="registrarCliente()">
                 <mat-icon>check</mat-icon>
                 Registrar Cliente
               </button>
             </div>
-            <!-- <div *ngIf="emEdicao">
-              <button class="mr-4 md:mb-0 mb-2" mat-flat-button extended color="warm" (click)="gravarPassageiro()">
-                <mat-icon>autorenew</mat-icon>
-                Atualizar Passageiro
-              </button>
-              <button mat-flat-button extended color="warm" (click)="novoPassageiro()">
-                <mat-icon>person_add</mat-icon>
-                Novo Passageiro
-              </button>
-            </div> -->
           </form>
         </mat-tab>
       </mat-tab-group>
