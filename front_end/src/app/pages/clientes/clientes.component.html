@@ -1,0 +1,224 @@
+<app-header-page [title]="'Clientes'" [icon]="'groups'" />
+
+<div class="flex justify-center">
+  <mat-card class="w-full mt-4 md:ml-4 md:mr-4">
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="left" #tabGroup>
+        <mat-tab label="Consulta">
+          <div>
+            <form [formGroup]="formFiltros" class="p-4">
+              <div class="grid md:grid-cols-4 gap-4">
+                <div class="col-span-2">
+                  <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Nome do Cliente</mat-label>
+                    <mat-icon matSuffix>people</mat-icon>
+                    <input
+                      id="campo-filtroNome"
+                      matInput
+                      formControlName="nome"
+
+                      maxlength="44"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <button class="mr-4 md:mb-0 mb-2" mat-flat-button (click)="recuperarClientes()">
+                  <mat-icon>search</mat-icon>
+                  Filtrar
+                </button>
+                <button class="mr-4 md:mb-0 mb-2" mat-flat-button extended (click)="limparFiltrosClientes()">
+                  <mat-icon>clear_all</mat-icon>
+                  Limpar Filtros
+                </button>
+                <button mat-flat-button extended style="background-color: #117c44; color: white;" (click)="limparFiltrosClientes()">
+                  <mat-icon>description</mat-icon>
+                  Gerar Excel
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div *ngIf="!loading && listaClientes.length != 0" class="relative overflow-x-auto mt-4">
+            <table class="w-full text-sm text-left">
+              <thead class="text-xs text-gray-700">
+                <tr>
+                  <!-- <th scope="col" class="px-6 py-3">Código</th> -->
+                  <th scope="col" class="px-6 py-3">Nome Completo</th>
+                  <th scope="col" class="px-6 py-3">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cliente of listaClientes | paginate: { itemsPerPage: 10, currentPage: page }" class="border-b hover:bg-blue-300">
+                  <!-- <th scope="row" class="px-6 py-4">
+                    {{ cliente.codigo }}
+                  </th> -->
+                  <th scope="row" class="px-6 py-4">
+                    {{ cliente.nome }}
+                  </th>
+                  <th scope="row" class="px-6 py-4">
+                    <div class="mb-2">
+                      <button mat-flat-button extended class="bg-red-600">
+                        <mat-icon>edit</mat-icon>
+                        Visualizar
+                      </button>
+                    </div>
+                    <!-- <div>
+                      <button mat-flat-button extended class="bg-red-600" (click)="perguntaDeletaPassageiro(passageiro.codigo, passageiro.nome)">
+                        <mat-icon>delete</mat-icon>
+                        Deletar
+                      </button>
+                    </div> -->
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls class="mt-4" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Próxima" />
+          </div>
+          <div *ngIf="!loading && listaClientes.length === 0" class="flex justify-center">
+            <p *ngIf="formFiltros.get('nome')?.value === ''" class="font-bold">Não existem clientes cadastrados.</p>
+            <p *ngIf="formFiltros.get('nome')?.value != ''" class="font-bold">Não foram encontrados clientes com os filtros utilizados.</p>
+          </div>
+          <div *ngIf="loading" class="flex justify-center mt-8 mb-4">
+            <mat-spinner></mat-spinner>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Cadastro">
+          <form [formGroup]="formCliente" class="p-4">
+            <div class="grid md:grid-cols-4 gap-4">
+              <div class="w-full md:col-span-2">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Nome Completo</mat-label>
+                  <mat-icon matSuffix>people</mat-icon>
+                  <input
+                    id="campo-nome"
+                    matInput
+                    formControlName="nome"
+
+                    [maxlength]="80"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-2">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>E-mail</mat-label>
+                  <mat-icon matSuffix>mail</mat-icon>
+                  <input
+                    id="campo-email"
+                    type="email"
+                    matInput
+                    formControlName="email"
+
+                    [maxlength]="50"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-1">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Telefone</mat-label>
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <input
+                    id="campo-telefone"
+                    type="number"
+                    matInput
+                    formControlName="telefone"
+                    [maxlength]="11"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-1">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Endereço</mat-label>
+                  <mat-icon matSuffix>people</mat-icon>
+                  <input
+                    id="campo-endereco"
+                    type="text"
+                    matInput
+                    formControlName="endereco"
+                    [maxlength]="44"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-1">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Número End.</mat-label>
+                  <mat-icon matSuffix>people</mat-icon>
+                  <input
+                    id="campo-numero"
+                    type="number"
+                    matInput
+                    formControlName="numero"
+                    [maxlength]="6"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-1">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Complemento</mat-label>
+                  <mat-icon matSuffix>people</mat-icon>
+                  <input
+                    id="campo-complemento"
+                    type="text"
+                    matInput
+                    formControlName="complemento"
+                    [maxlength]="44"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-2">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Bairro</mat-label>
+                  <mat-icon matSuffix>people</mat-icon>
+                  <input
+                    id="campo-bairro"
+                    type="text"
+                    matInput
+                    formControlName="bairro"
+                    [maxlength]="50"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="w-full md:col-span-2">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Cidade</mat-label>
+                  <mat-icon matSuffix>people</mat-icon>
+                  <input
+                    id="campo-cidade"
+                    type="cidade"
+                    matInput
+                    formControlName="cidade"
+                    [maxlength]="35"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <button mat-flat-button extended color="warm" (click)="registrarCliente()">
+                <mat-icon>check</mat-icon>
+                Registrar Cliente
+              </button>
+            </div>
+            <!-- <div *ngIf="emEdicao">
+              <button class="mr-4 md:mb-0 mb-2" mat-flat-button extended color="warm" (click)="gravarPassageiro()">
+                <mat-icon>autorenew</mat-icon>
+                Atualizar Passageiro
+              </button>
+              <button mat-flat-button extended color="warm" (click)="novoPassageiro()">
+                <mat-icon>person_add</mat-icon>
+                Novo Passageiro
+              </button>
+            </div> -->
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
