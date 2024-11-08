@@ -14,8 +14,11 @@ export class ClienteService {
     private _httpClient: HttpClient
   ) { }
 
-  getClientes() {
-    const url = `${environment.api}/clientes/get`;
+  getClientes(nome?: string) {
+    var url = `${environment.api}/clientes/get`;
+    if (nome != '') {
+      url = `${environment.api}/clientes/get?nome=${nome}`;
+    }
     return this._httpClient.get<Object>(url).pipe(
       map((response: any) => {
         return response;
