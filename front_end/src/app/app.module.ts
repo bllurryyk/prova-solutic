@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderPageComponent } from './components/header-page/header-page.component';
@@ -49,11 +50,13 @@ import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.com
     MatInputModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxMaskDirective
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    [provideNgxMask({})]
   ],
   bootstrap: [AppComponent]
 })

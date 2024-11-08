@@ -7,12 +7,12 @@ export const MenuAdm = {
         {
           "nome": "Consultar",
           "icone": "search",
-          "rota": "/administrativo/clientes/consultar",
+          "rota": "/administrativo/clientes",
         },
         {
           "nome": "Cadastrar",
           "icone": "add",
-          "rota": "/administrativo/clientes/cadastrar",
+          "rota": "/administrativo/clientes",
         }
       ]
     }

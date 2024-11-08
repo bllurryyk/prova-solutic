@@ -17,7 +17,12 @@ def post_cliente(request):
 
 @api_view(['GET'])
 def get_clientes(request):
-    clientes = Cliente.objects.all()
+    nome = request.query_params.get('nome', None) 
+
+    if nome:
+        clientes = Cliente.objects.filter(nome__icontains=nome)
+    else:
+        clientes = Cliente.objects.all()
     serializer = ClienteSerializer(clientes, many=True)
     return Response(serializer.data)
 

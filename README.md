@@ -3,27 +3,27 @@
 
 ## Instruções para execução do projeto
 ### Back-End
-Abra o projeto back_end   
-Gere a pasta de dependências:
+1-Abra o projeto back_end   
+2-Gere a pasta de dependências:
 ```
 python3 -m venv venv
 ```
-Instale todas as dependências:  
+3-Instale todas as dependências:  
 ``` python
 pip install -r requirements.txt
 ```
-Iniciei o projeto local:
+4-Iniciei o projeto local:
 ``` python
 python manage.py runserver 7000
 ```
 
 ### Front-End
-Abra o projeto front_end  
-Instale as dependências:  
+1-Abra o projeto front_end  
+2-Instale as dependências:  
 ``` cmd
 npm i
 ```
-Inicie o projeto no servidor local:
+3-Inicie o projeto no servidor local:
 ``` cmd
 ng serve
 ```
@@ -37,3 +37,4 @@ Porta: 5432
 Nome do Banco: gestao_empresa
 Senha: JShtU93KeQbbebXS
 ```
+Mas caso seja necessário, adicionei o DUMP na pasta banco_dados
