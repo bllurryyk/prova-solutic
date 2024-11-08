@@ -31,7 +31,7 @@
                   <mat-icon>clear_all</mat-icon>
                   Limpar Filtros
                 </button>
-                <button mat-flat-button extended style="background-color: #117c44; color: white;" (click)="limparFiltrosClientes()">
+                <button mat-flat-button extended style="background-color: #117c44; color: white;" (click)="gerarExcel()">
                   <mat-icon>description</mat-icon>
                   Gerar Excel
                 </button>
@@ -43,32 +43,17 @@
             <table class="w-full text-sm text-left">
               <thead class="text-xs text-gray-700">
                 <tr>
-                  <!-- <th scope="col" class="px-6 py-3">Código</th> -->
+                  <th scope="col" class="px-6 py-3">ID</th>
                   <th scope="col" class="px-6 py-3">Nome Completo</th>
-                  <th scope="col" class="px-6 py-3">Opções</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let cliente of listaClientes | paginate: { itemsPerPage: 10, currentPage: page }" class="border-b hover:bg-blue-300">
-                  <!-- <th scope="row" class="px-6 py-4">
-                    {{ cliente.codigo }}
-                  </th> -->
                   <th scope="row" class="px-6 py-4">
-                    {{ cliente.nome }}
+                    {{ cliente.id_cliente }}
                   </th>
                   <th scope="row" class="px-6 py-4">
-                    <div class="mb-2">
-                      <button mat-flat-button extended class="bg-red-600">
-                        <mat-icon>edit</mat-icon>
-                        Visualizar
-                      </button>
-                    </div>
-                    <!-- <div>
-                      <button mat-flat-button extended class="bg-red-600" (click)="perguntaDeletaPassageiro(passageiro.codigo, passageiro.nome)">
-                        <mat-icon>delete</mat-icon>
-                        Deletar
-                      </button>
-                    </div> -->
+                    {{ cliente.nome }}
                   </th>
                 </tr>
               </tbody>
